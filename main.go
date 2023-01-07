@@ -59,7 +59,6 @@ func sendNumberOfClients(conn *websocket.Conn) {
 
 func broadcastMessage(conn *websocket.Conn, ip string) {
 	for {
-
 		// Use conn.ReadMessage to read messages from the client
 		_, message, err := conn.ReadMessage()
 		if err != nil {
@@ -93,5 +92,4 @@ func broadcastMessage(conn *websocket.Conn, ip string) {
 func main() {
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
-
 }

@@ -1,26 +1,35 @@
-import WebSocket from 'ws';
 
-const ws = new WebSocket('ws://localhost:8080');
+let ws;
+console.log(ws)
 
-ws.on("open", (am) => {
-    // setInterval(() => {
-    //     ws.send('ping' + new Date().getTime());
-    // }, 1000);
+connect("AnyUsername");
 
-    ws.on('message', socket => {
-        const message = socket.toString()
-        console.log('message', message)
-    });
+const connect = (username) => {
+    ws = new WebSocket('ws://localhost:8080');
 
-    
-})
+    ws.on("open", (am) => {
+        // setInterval(() => {
+        //     ws.send('ping' + new Date().getTime());
+        // }, 1000);
+        
 
+        ws.send('username', username)
+        ws.on('message', socket => {
+            const message = socket.toString()
+            console.log('message', message)
+        });
+    })
+};
 
-// get user input
-const stdin = process.openStdin();
-stdin.addListener("data", function(d) {
-    const message = d.toString().trim();
-    if(message) {
-        ws.send(message);
+const readMessage = (message) => {
+
+};
+
+const SendMessage = (message) => {
+    if (!ws || ws.readyState !== WebSocket.OPEN || !message) {
+        return;
     }
-});
+
+    ws.send(message);
+}
+
